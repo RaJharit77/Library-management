@@ -1,0 +1,238 @@
+openapi: 3.1.0
+info:
+  title: Library Management API
+  version: 1.0.0-oas3.1
+  description: API for managing books and authors in a library.
+paths:
+  /books:
+    get:
+      summary: Retrieve a list of books
+      parameters:
+      - name: bookName
+        in: query
+        description: Filter by book name
+        required: false
+        schema:
+          type: string
+      - name: releaseDate
+        in: query
+        description: Filter by release date range
+        required: false
+        schema:
+          type: string
+          format: date
+          example: "2024-01-01,2024-12-31"
+      responses:
+        "200":
+          description: List of books retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    bookName:
+                      type: string
+                    author:
+                      type: string
+                    pageNumbers:
+                      type: integer
+                    topic:
+                      type: string
+                      enum:
+                      - ROMANCE
+                      - COMEDY
+                      - OTHER
+                    releaseDate:
+                      type: string
+                      format: date
+    post:
+      summary: Add a new book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                bookName:
+                  type: string
+                author:
+                  type: string
+                pageNumbers:
+                  type: integer
+                topic:
+                  type: string
+                  enum:
+                  - ROMANCE
+                  - COMEDY
+                  - OTHER
+                releaseDate:
+                  type: string
+                  format: date
+      responses:
+        "201":
+          description: Book created successfully.
+    put:
+      summary: Update a book (idempotent)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                bookName:
+                  type: string
+                author:
+                  type: string
+                pageNumbers:
+                  type: integer
+                topic:
+                  type: string
+                  enum:
+                  - ROMANCE
+                  - COMEDY
+                  - OTHER
+                releaseDate:
+                  type: string
+                  format: date
+      responses:
+        "200":
+          description: Book updated successfully.
+    delete:
+      summary: Delete a book
+      parameters:
+      - name: id
+        in: query
+        description: Book ID to delete
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Book deleted successfully.
+  /authors:
+    get:
+      summary: Retrieve a list of authors
+      parameters:
+      - name: authorName
+        in: query
+        description: Filter by author name
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of authors retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    sex:
+                      type: string
+                      enum:
+                      - M
+                      - F
+    post:
+      summary: Add a new author
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                sex:
+                  type: string
+                  enum:
+                  - M
+                  - F
+      responses:
+        "201":
+          description: Author created successfully.
+    put:
+      summary: Update an author (idempotent)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                sex:
+                  type: string
+                  enum:
+                  - M
+                  - F
+      responses:
+        "200":
+          description: Author updated successfully.
+    delete:
+      summary: Delete an author
+      parameters:
+      - name: id
+        in: query
+        description: Author ID to delete
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Author deleted successfully.
+components:
+  schemas:
+    Book:
+      type: object
+      properties:
+        id:
+          type: string
+        bookName:
+          type: string
+        author:
+          type: string
+        pageNumbers:
+          type: integer
+        topic:
+          type: string
+          enum:
+          - ROMANCE
+          - COMEDY
+          - OTHER
+        releaseDate:
+          type: string
+          format: date
+    Author:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        sex:
+          type: string
+          enum:
+          - M
+          - F
