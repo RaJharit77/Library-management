@@ -1,7 +1,7 @@
-import prog3.management.library.controllers.AuthorController;
-import prog3.management.library.controllers.BookController;
-import prog3.management.library.model.Author;
-import prog3.management.library.model.Book;
+import controllers.AuthorController;
+import controllers.BookController;
+import model.Author;
+import model.Book;
 
 import java.sql.SQLException;
 import java.util.*;
